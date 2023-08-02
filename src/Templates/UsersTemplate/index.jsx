@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, createContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -17,7 +18,7 @@ import './styles.scss';
 export const UserContext = createContext();
 
 const UsersTemplate = () => {
-    const [isUpdate, setUpdate] = useState(true);
+    // const [isUpdate, setUpdate] = useState(true);
     const [isLoading, setLoading] = useState(false);
     const [filter, setFilter] = useState('');
 
@@ -38,32 +39,32 @@ const UsersTemplate = () => {
 
     const showToast = (info) => toast(info);
 
-    useEffect(() => {
-        const getUsers = async () => {
-            setLoading(true);
-            try {
-                const response = await fetch(USERS_URL);
-                const data = await response.json();
-                if (data) {
-                    addUsersList(data);
-                    showToast(TOAST_MESSAGES.success);
-                }
-                else showToast(TOAST_MESSAGES.warning)
-            } catch (error) {
-                showToast(error.message);
+    const getUsers = async () => {
+        setLoading(true);
+        try {
+            const response = await fetch(USERS_URL);
+            const data = await response.json();
+            if (data) {
+                addUsersList(data);
+                showToast(TOAST_MESSAGES.success);
             }
-            setLoading(false);
+            else showToast(TOAST_MESSAGES.warning)
+        } catch (error) {
+            showToast(error.message);
         }
+        setLoading(false);
+    }
 
+    useEffect(() => {
         getUsers();
-    }, [isUpdate])
+    }, [])
 
     return (
         <div className="users-list">
             <h2 className="users-list__title">{TITLE}</h2>
             {!isLoading && <InputGroupComponent
                 onInputChange={(e) => filterList(e)}
-                updateClick={() => setUpdate(!isUpdate)}
+                updateClick={() => getUsers()}
             />}
             {isLoading && <SpinnerComponent />}
             {usersList && usersList.filter(item => item.name.includes(filter) || item.username.includes(filter) || item.email.includes(filter))
