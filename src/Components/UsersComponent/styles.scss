@@ -1,0 +1,31 @@
+@import '../../variable';
+
+.user-card {
+    position: relative;
+    border: 1px solid $borderColor;
+    border-radius: 4px;
+    margin-top: 15px;
+    padding: 16px;
+
+    &__name {
+        margin: 0;
+    }
+
+    &__delete-btn {
+        position: relative;
+        z-index: 20;
+    }
+
+    &:hover {
+        cursor: pointer;
+        border: 1px solid $borderColorHover;
+        transition: all;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+  .user-card {
+    display: flex;
+    flex-direction: column;
+  }
+}

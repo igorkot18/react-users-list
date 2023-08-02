@@ -1,0 +1,9 @@
+.users-list {
+  margin: 0 50px;
+}
+
+@media only screen and (max-width: 600px) {
+  .users-list {
+    margin: 0 10px;
+  }
+}
